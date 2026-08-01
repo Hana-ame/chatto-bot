@@ -173,6 +173,35 @@ OPENAI_API_KEY=sk-...
 OPENAI_MODEL=gpt-4o-mini
 ```
 
+### RAG(检索增强)
+
+回答 `!ai` 问题前,bot 会从多个来源检索参考资料拼进 prompt:
+
+| 来源 | 说明 | 配置 |
+|----------|------|------|
+| 房间历史 | 当前房间最近 N 条消息作为对话上下文 | `HISTORY_LIMIT`(默认 20) |
+| 本地知识库 | `knowledge/` 下所有 `.md` 文件,关键词 + 语义混合打分 | `KNOWLEDGE_DIR`(默认 `knowledge`) |
+| 网络搜索 | SearXNG JSON API,设了 `SEARCH_URL` 才启用 | `SEARCH_URL`、`SEARCH_RESULTS`(默认 3) |
+
+总上下文上限 `RAG_MAX_CHARS`(默认 6000)。
+
+**语义检索(embedding)**:知识库打分 = 关键词重叠 + 0.5 × 余弦相似度。
+不设 key 时自动退化为纯关键词检索。chunk 向量缓存于
+`knowledge/.embeddings.json`,文件改动后自动增量重建:
+
+```
+EMBEDDING_URL=https://api.siliconflow.cn/v1/embeddings   # 任意 OpenAI 兼容端点
+EMBEDDING_API_KEY=sk-...
+EMBEDDING_MODEL=BAAI/bge-m3
+```
+
+**回写**:群里发 `!memo <内容>`,bot 会把内容追加到 `knowledge/memory.md`
+(带时间戳,重复内容自动去重),之后提问时会自动检索到。你的普通 `.md` 文档
+直接放进 `knowledge/` 即可参与检索。
+
+预留接口:新增检索源只需在 `plugins/rag.py` 实现一个返回文本片段的函数,
+并在 `retrieve_all` 里注册,`plugins/ai.py` 无需改动。
+
 ## 在 Windows 10 上运行
 
 AI bot 就是一个纯 Python 程序——在 Windows 10 上直接用 `py` 启动器运行

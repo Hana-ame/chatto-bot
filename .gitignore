@@ -7,3 +7,5 @@ src/chatto_bot/_version.py
 dist/
 build/
 .pytest_cache/
+knowledge/.embeddings.json
+bot.log
