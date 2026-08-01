@@ -140,6 +140,40 @@ extensions:
 
 Keep secrets (`token`, `session`, `email`, `password`) out of YAML. Use `.env` or environment variables instead.
 
+## AI bot
+
+The `plugins/ai.py` extension turns the bot into an LLM-powered assistant.
+It listens for `message_posted`, and replies when a message starts with the
+AI prefix (default `!ai`) or mentions the bot (`@<login> ...`).
+
+Load it like any other extension:
+
+```yaml
+extensions:
+  - plugins.ai
+```
+
+Configure the OpenAI-compatible endpoint via environment variables:
+
+| Variable | Description |
+|----------|-------------|
+| `OPENAI_BASE_URL` | OpenAI-compatible API base (default: `https://api.openai.com/v1`). Works with any compatible endpoint (OpenAI, DeepSeek, local Ollama, etc.). |
+| `OPENAI_API_KEY` | API key for the endpoint. |
+| `OPENAI_MODEL` | Model name (default: `gpt-4o-mini`). |
+| `OPENAI_SYSTEM_PROMPT` | Optional system prompt. |
+| `AI_PREFIX` | Trigger prefix (default: `!ai`). |
+
+Example (`.env`):
+
+```
+CHATTO_INSTANCE=https://chat.chatto.run
+CHATTO_EMAIL=ai-bot@example.com
+CHATTO_PASSWORD=...
+OPENAI_BASE_URL=https://api.openai.com/v1
+OPENAI_API_KEY=sk-...
+OPENAI_MODEL=gpt-4o-mini
+```
+
 ## License
 
 [AGPL-3.0-or-later](LICENSE)
