@@ -174,6 +174,44 @@ OPENAI_API_KEY=sk-...
 OPENAI_MODEL=gpt-4o-mini
 ```
 
+## Run on Windows 10
+
+The AI bot is a plain Python program — on Windows 10 just run it directly with
+the `py` launcher (no need to compile anything).
+
+1. Install Python 3.11+ from [python.org](https://www.python.org/downloads/).
+   During install, tick **Add Python to PATH**.
+
+2. Open a terminal in this folder and install the framework:
+
+   ```bat
+   py -m pip install -e .
+   ```
+
+3. Create `.env` next to `run_ai_bot.py` with your credentials and LLM
+   endpoint:
+
+   ```
+   CHATTO_INSTANCE=https://chatto.moonchan.xyz
+   CHATTO_EMAIL=ai-bot
+   CHATTO_PASSWORD=...
+   OPENAI_BASE_URL=https://your-host/v1/chat/completions
+   OPENAI_API_KEY=...
+   OPENAI_MODEL=your-model
+   ```
+
+4. Run the bot (main program):
+
+   ```bat
+   py run_ai_bot.py
+   ```
+
+That's it. The bot logs in, joins every visible room, and replies to
+`!ai <prompt>` or `@ai-bot <prompt>`.
+
+To keep it running in the background on Windows, run it in a PowerShell
+window and leave it open, or register it as a scheduled task at logon.
+
 ## License
 
 [AGPL-3.0-or-later](LICENSE)
