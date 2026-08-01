@@ -42,7 +42,7 @@ async def ask_llm(prompt: str) -> str:
         return "AI bot is not configured: OPENAI_API_KEY is unset."
     async with httpx.AsyncClient(timeout=60) as client:
         resp = await client.post(
-            f"{BASE_URL}/chat/completions",
+            BASE_URL,
             headers={"Authorization": f"Bearer {API_KEY}"},
             json={
                 "model": MODEL,

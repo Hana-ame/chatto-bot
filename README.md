@@ -157,7 +157,7 @@ Configure the OpenAI-compatible endpoint via environment variables:
 
 | Variable | Description |
 |----------|-------------|
-| `OPENAI_BASE_URL` | OpenAI-compatible API base (default: `https://api.openai.com/v1`). Works with any compatible endpoint (OpenAI, DeepSeek, local Ollama, etc.). |
+| `OPENAI_BASE_URL` | Full OpenAI-compatible `.../chat/completions` endpoint URL. Works with any compatible endpoint (OpenAI, DeepSeek, local Ollama, etc.). |
 | `OPENAI_API_KEY` | API key for the endpoint. |
 | `OPENAI_MODEL` | Model name (default: `gpt-4o-mini`). |
 | `OPENAI_SYSTEM_PROMPT` | Optional system prompt. |
