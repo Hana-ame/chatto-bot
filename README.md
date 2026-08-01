@@ -179,32 +179,63 @@ OPENAI_MODEL=gpt-4o-mini
 The AI bot is a plain Python program — on Windows 10 just run it directly with
 the `py` launcher (no need to compile anything).
 
-1. Install Python 3.11+ from [python.org](https://www.python.org/downloads/).
-   During install, tick **Add Python to PATH**.
+### 0. Prerequisites
 
-2. Open a terminal in this folder and install the framework:
+- **Git** — [git-scm.com](https://git-scm.com/download/win)
+- **Python 3.11+** — [python.org](https://www.python.org/downloads/).
+  During install, tick **Add Python to PATH**.
+- A **Chatto bot account**. If your Chatto instance uses email verification
+  and you can't receive emails (no SMTP), ask the instance owner to create the
+  bot user via the operator CLI:
 
-   ```bat
-   py -m pip install -e .
-   ```
+  ```
+  chatto operator user create \
+      --login ai-bot \
+      --display-name "AI Bot" \
+      --verified-email ai-bot@example.com \
+      --password '<password>' \
+      --role owner
+  ```
 
-3. Create `.env` next to `run_ai_bot.py` with your credentials and LLM
-   endpoint:
+### 1. Clone the repo
 
-   ```
-   CHATTO_INSTANCE=https://chatto.moonchan.xyz
-   CHATTO_EMAIL=ai-bot
-   CHATTO_PASSWORD=...
-   OPENAI_BASE_URL=https://your-host/v1/chat/completions
-   OPENAI_API_KEY=...
-   OPENAI_MODEL=your-model
-   ```
+```bat
+git clone git@github.com:Hana-ame/chatto-bot.git
+cd chatto-bot
+```
 
-4. Run the bot (main program):
+(Or fork it on GitHub first, then clone your own fork.)
 
-   ```bat
-   py run_ai_bot.py
-   ```
+### 2. Install
+
+`run_ai_bot.py` does `from chatto_bot import Bot`, so the framework package
+plus its dependencies (`httpx`, `websockets`, `connectrpc`, `pyyaml`) must be
+installed once. `pip install -e .` installs the *current folder* — the exact
+code you just cloned — in editable mode (your local changes take effect
+immediately, no reinstall needed):
+
+```bat
+py -m pip install -e .
+```
+
+### 3. Configure
+
+Create `.env` next to `run_ai_bot.py` with your credentials and LLM endpoint:
+
+```
+CHATTO_INSTANCE=https://chatto.moonchan.xyz
+CHATTO_EMAIL=ai-bot
+CHATTO_PASSWORD=...
+OPENAI_BASE_URL=https://your-host/v1/chat/completions
+OPENAI_API_KEY=...
+OPENAI_MODEL=your-model
+```
+
+### 4. Run
+
+```bat
+py run_ai_bot.py
+```
 
 That's it. The bot logs in, joins every visible room, and replies to
 `!ai <prompt>` or `@ai-bot <prompt>`.
