@@ -1,18 +1,8 @@
-# Chatto Bot configuration
-# Secrets (token, email, password, session) should stay in .env or environment variables.
+# Chatto AI bot configuration
+# Credentials come from .env / environment variables (CHATTO_*).
 
-instance: https://chat.chatto.run
 prefix: "!"
 dms: true
 
-# rooms: optional allowlist of room IDs. Omit to handle every joined room.
-# rooms:
-#   - <room-id>
-
-admins:
-  - teal
-  - hmans
-
 extensions:
-  - plugins.admin
-  - plugins.remind
+  - plugins.ai
